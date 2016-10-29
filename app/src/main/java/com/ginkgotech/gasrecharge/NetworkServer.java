@@ -1,9 +1,5 @@
 package com.ginkgotech.gasrecharge;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import com.ginkgotech.gasrecharge.model.CardQueryModel;
 import com.koushikdutta.async.AsyncServer;
 import com.koushikdutta.async.AsyncSocket;
 import com.koushikdutta.async.ByteBufferList;
@@ -13,23 +9,19 @@ import com.koushikdutta.async.callback.CompletedCallback;
 import com.koushikdutta.async.callback.ConnectCallback;
 import com.koushikdutta.async.callback.DataCallback;
 
+/**
+ * Created by Administrator on 2016/10/29.
+ */
 
-public class MainActivity extends AppCompatActivity {
+public class NetworkServer {
 
-    private String protocol = "0567|2001|1|a2131091ffff8115ffffffffffffffffffff01ffffd27600000400ffffffffff7050635a005c5e00320100000010061805ef51000000000202ef0000000000000000000000000000000000000000030094ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffff01201606e4000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990929400ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|20160905|171025|200001|0123456789|75621477";
+    public static String SERVER_IP = "120.25.121.156";
+    public static int SERVER_PORT = 10020;
 
-    private CardQueryModel cardQueryModel;
+    public static AsyncSocket socket;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        connectServer();
-        cardQueryModel = new CardQueryModel();
-    }
-
-    private void connectServer() {
-        AsyncServer.getDefault().connectSocket("120.25.121.156", 10020, new ConnectCallback() {
+    public  void connect1() {
+        AsyncServer.getDefault().connectSocket(SERVER_IP, SERVER_PORT, new ConnectCallback() {
             @Override
             public void onConnectCompleted(Exception ex, AsyncSocket socket) {
                 handleConnectCompleted(ex, socket);
@@ -40,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
     private void handleConnectCompleted(Exception ex, final AsyncSocket socket) {
         if(ex != null) throw new RuntimeException(ex);
 
-        Util.writeAll(socket, protocol.getBytes(), new CompletedCallback() {
-            @Override
-            public void onCompleted(Exception ex) {
-                if (ex != null) throw new RuntimeException(ex);
-                System.out.println("[Client] Successfully wrote message");
-            }
-        });
+//        Util.writeAll(socket, protocol.getBytes(), new CompletedCallback() {
+//            @Override
+//            public void onCompleted(Exception ex) {
+//                if (ex != null) throw new RuntimeException(ex);
+//                System.out.println("[Client] Successfully wrote message");
+//            }
+//        });
 
         socket.setDataCallback(new DataCallback() {
             @Override
@@ -72,4 +64,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }

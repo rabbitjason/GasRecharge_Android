@@ -4,7 +4,7 @@ package com.ginkgotech.gasrecharge.model;
  * Created by lipple-server on 16/10/29.
  */
 
-public abstract class BaseModel {
+public abstract class BaseModel implements BusinessResponse {
 
     public int len;
 
