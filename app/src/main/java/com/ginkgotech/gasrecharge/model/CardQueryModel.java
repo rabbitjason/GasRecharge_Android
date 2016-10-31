@@ -8,9 +8,17 @@ public class CardQueryModel extends BaseModel {
 
     public BusinessResponse mBusinessResponse;
 
+    private String rawData;
     public CardQueryModel() {
         len = 0;
         code = "2001";
+    }
+    public void setRawData(String rawData) {
+        this.rawData = rawData;
+    }
+
+    public String getRawData() {
+        return this.rawData;
     }
 
     public void setBusinessResponse(BusinessResponse businessResponse) {
@@ -43,6 +51,11 @@ public class CardQueryModel extends BaseModel {
 
     @Override
     public void OnEndCompleted(Exception ex) {
+
+    }
+
+    @Override
+    public void OnConnectCompleted(Exception ex) {
 
     }
 

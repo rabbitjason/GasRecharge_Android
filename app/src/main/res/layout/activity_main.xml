@@ -10,8 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ginkgotech.gasrecharge.MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/btnCardQuery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Card Query"/>
+
+    <TextView
+        android:id="@+id/tvCardInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Care Info"
+        android:layout_below="@+id/btnCardQuery"/>
 </RelativeLayout>

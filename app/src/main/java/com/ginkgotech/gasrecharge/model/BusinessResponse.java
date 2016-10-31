@@ -13,4 +13,6 @@ public interface BusinessResponse {
     public void OnCloseCompleted(Exception ex);
 
     public void OnEndCompleted(Exception ex);
+
+    public void OnConnectCompleted(Exception ex);
 }
