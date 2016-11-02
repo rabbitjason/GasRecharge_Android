@@ -4,22 +4,115 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.ginkgotech.gasrecharge.MainActivity">
+    tools:context="com.ginkgotech.gasrecharge.MainActivity"
+    android:background="@color/background">
 
-    <Button
-        android:id="@+id/btnCardQuery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Card Query"/>
-
-    <TextView
-        android:id="@+id/tvCardInfo"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Care Info"
-        android:layout_below="@+id/btnCardQuery"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/headerHeight"
+            android:text="华润燃气自助充值圈存"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#FF8C00"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:background="@color/background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnQuery"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/itemColor"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/main_query" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/background"/>
+
+            <ImageButton
+                android:id="@+id/btnPay"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:background="@color/itemColor"
+                android:src="@mipmap/main_pay"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/itemColor"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/main_save" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/background"/>
+
+            <ImageButton
+                android:id="@+id/btnHelp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:background="@color/itemColor"
+                android:src="@mipmap/main_help"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:background="@color/background"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/headerHeight"
+            android:text="联系客服"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#FF8C00"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

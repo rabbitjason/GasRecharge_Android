@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ginkgotech.gasrecharge.model.BusinessResponse;
@@ -30,14 +32,12 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
 
     private NetworkServer networkServer;
 
-    private Button btnCareQuery;
-
-    private TextView tvCareInfo;
+    private ImageButton btnQuery;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (MSG_UPDATE_UI == msg.what) {
-                tvCareInfo.setText(cardQueryModel.getRawData());
+//                tvCareInfo.setText(cardQueryModel.getRawData());
             }
         }
     };
@@ -45,26 +45,33 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-
-        btnCareQuery = (Button) findViewById(R.id.btnCardQuery);
-        btnCareQuery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvCareInfo.setText("Click Care Query!");
-                networkServer.connect();
-            }
-        });
-
-        tvCareInfo = (TextView) findViewById(R.id.tvCardInfo);
 
         networkServer = new NetworkServer();
         networkServer.setBusinessResponse(this);
 
-        cardQueryModel = new CardQueryModel();
+        btnQuery = (ImageButton) findViewById(R.id.btnQuery);
+        btnQuery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                networkServer.connect();
+            }
+        });
+
+//        btnCareQuery = (Button) findViewById(R.id.btnCardQuery);
+//        btnCareQuery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                tvCareInfo.setText("Click Care Query!");
+//                networkServer.connect();
+//            }
+//        });
+
+        //tvCareInfo = (TextView) findViewById(R.id.tvCardInfo);
+
+        //cardQueryModel = new CardQueryModel();
     }
-
-
 
     private void connectServer() {
         AsyncServer.getDefault().connectSocket("120.25.121.156", 10020, new ConnectCallback() {

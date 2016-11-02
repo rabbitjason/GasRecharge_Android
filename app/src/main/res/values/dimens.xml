@@ -5,4 +5,6 @@
 
     <dimen name="itemMarginLeft">10dp</dimen>
     <dimen name="itemTextSize">18sp</dimen>
+
+    <dimen name="headerHeight">45dp</dimen>
 </resources>
