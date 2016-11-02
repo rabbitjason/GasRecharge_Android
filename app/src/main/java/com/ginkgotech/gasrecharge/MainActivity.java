@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -25,7 +26,12 @@ import com.koushikdutta.async.callback.DataCallback;
 
 public class MainActivity extends AppCompatActivity implements BusinessResponse {
     public static final String TAG = "MainActivity";
-    public static final int MSG_UPDATE_UI = 1;
+
+    public static final int ACTION_QUERY = 101;
+    public static final int ACTION_SAVE =  102;
+
+    public static final int MSG_UPDATE_UI = 201;
+                               //0567|2001|1|a2131091ffff8115ffffffffffffffffffff01ffffd27600000400ffffffffff7050635a005c5e00320100000010061805ef51000000000202ef0000000000000000000000000000000000000000030094ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffff01201606e4000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990929400ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|20161102|193958|200001|0123456789|75621477
     private String protocol = "0567|2001|1|a2131091ffff8115ffffffffffffffffffff01ffffd27600000400ffffffffff7050635a005c5e00320100000010061805ef51000000000202ef0000000000000000000000000000000000000000030094ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffff01201606e4000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990929400ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|20160905|171025|200001|0123456789|75621477";
 
     private CardQueryModel cardQueryModel;
@@ -33,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
     private NetworkServer networkServer;
 
     private ImageButton btnQuery;
+
+    private int action = 0;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -51,11 +59,13 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
         networkServer = new NetworkServer();
         networkServer.setBusinessResponse(this);
 
+        cardQueryModel = new CardQueryModel();
         btnQuery = (ImageButton) findViewById(R.id.btnQuery);
         btnQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 networkServer.connect();
+                action = ACTION_QUERY;
             }
         });
 
@@ -132,6 +142,8 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
         cardQueryModel.setRawData(recv);
         //tvCareInfo.setText(recv);
         handler.sendEmptyMessage(MSG_UPDATE_UI);
+
+        networkServer.close();
     }
 
     @Override
@@ -155,7 +167,18 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
     @Override
     public void OnConnectCompleted(Exception ex) {
         if (ex == null) {
-            networkServer.write(protocol);
+            String sendMsg = "";
+            switch (action) {
+                case ACTION_QUERY:
+                    sendMsg = cardQueryModel.packageData();
+                    break;
+                default:
+                    break;
+            }
+            if (!TextUtils.isEmpty(sendMsg)) {
+                networkServer.write(sendMsg);
+            }
+
         } else {
             Log.v(TAG, "[Client] Failed connection!");
         }

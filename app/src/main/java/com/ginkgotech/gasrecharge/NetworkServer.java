@@ -33,6 +33,9 @@ public class NetworkServer {
         this.mBusinessResponse = businessResponse;
     }
 
+    public void close() {
+        mSocket.close();
+    }
     public void connect() {
         AsyncServer.getDefault().connectSocket(SERVER_IP, SERVER_PORT, new ConnectCallback() {
             @Override

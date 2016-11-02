@@ -17,7 +17,7 @@
             android:layout_height="@dimen/headerHeight"
             android:text="华润燃气自助充值圈存"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="23sp"
             android:textStyle="bold"
             android:gravity="center"
             android:background="#FF8C00"/>
