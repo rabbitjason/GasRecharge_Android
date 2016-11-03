@@ -1,5 +1,8 @@
 package com.ginkgotech.gasrecharge.model;
 
+import android.content.Context;
+
+import com.ginkgotech.gasrecharge.Constant;
 import com.ginkgotech.gasrecharge.GasUtils;
 import com.ginkgotech.gasrecharge.NetworkServer;
 
@@ -7,146 +10,55 @@ import com.ginkgotech.gasrecharge.NetworkServer;
  * Created by lipple-server on 16/10/29.
  */
 
-public class CardQueryModel extends BaseModel {
+public class CardQueryModel {
 
     public BusinessResponse mBusinessResponse;
 
-    private String cardType;
-    private byte []cardData = new byte[512];
-    private String date;
-    private String time;
-    private String agentCode;
-    private String terminateCode;
-    private String machineCode;
+    private Context mContext;
 
-    private String rawData="";
+    private Pos pos;
 
-    private NetworkServer networkServer;
+    private Customer customer;
 
-    public CardQueryModel() {
-        len = 0;
-        code = "2001";
-        cardType = "1";
-        cardData = GasUtils.hexStringToBytes("a2131091ffff8115ffffffffffffffffffff01ffffd27600000400ffffffffff7050635a005c5e00320100000010061805ef51000000000202ef0000000000000000000000000000000000000000030094ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffff01201606e4000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990929400ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        date = GasUtils.getCurrentDate();
-        time = GasUtils.getCurrentTime();
-        agentCode = "200001";
-        terminateCode = "0123456789";
-        machineCode = "75621477";
+    private Card card;
+
+    public CardQueryModel(Context context) {
+        this.mContext = context;
     }
-
-    public void setRawData(String rawData) {
-        this.rawData = rawData;
-    }
-
-    public String getRawData() {
-        return this.rawData;
-    }
-
 
     public void setBusinessResponse(BusinessResponse businessResponse) {
         this.mBusinessResponse = businessResponse;
+        NetworkServer.getInstance().setBusinessResponse(mBusinessResponse);
     }
 
     public void request() {
 
+        NetworkServer.getInstance().write(packageQueryData());
+
     }
 
-    @Override
-    public String packageData() {
+    private String packageQueryData() {
         String sendData = "";
-        sendData = code + "|" + cardType + "|";
-        sendData += GasUtils.bytesToHexString(getCardData()) + "|";
-        sendData += GasUtils.getCurrentDate() + "|" + GasUtils.getCurrentTime() + "|" + agentCode + "|" + terminateCode + "|" + machineCode;
+        sendData = Constant.TRANSACTION_CODE_QUERY + "|" + card.getCardType() + "|";
+        sendData += GasUtils.bytesToHexString(card.getCardData()) + "|";
+        sendData += GasUtils.getCurrentDate() + "|" + GasUtils.getCurrentTime() + "|"
+                + pos.getAgentCode() + "|" + pos.getTerminateCode() + "|" + pos.getMachineCode();
+
         int len = sendData.length() + 5;
         sendData = String.format("%04d", len) + "|" + sendData;
         return sendData;
     }
 
-    @Override
-    public void parseData(String recvData) {
-        String[] fields = recvData.split("|");
+    public boolean ready() {
+        //todo read pos config information
+        pos = new Pos("200001", "0123456789", "75621477");
 
+        //todo read card information
+        card = new Card();
+        card.setCardType("1");
+        card.setCardData(GasUtils.hexStringToBytes("a2131091ffff8115ffffffffffffffffffff01ffffd27600000400ffffffffff7050635a005c5e00320100000010061805ef51000000000202ef0000000000000000000000000000000000000000030094ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffff01201606e4000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990929400ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"));
+
+        return true;
     }
 
-    @Override
-    public void OnWriteCompleted(Exception ex) {
-
-    }
-
-    @Override
-    public void OnDataAvailable(String recv) {
-
-    }
-
-    @Override
-    public void OnCloseCompleted(Exception ex) {
-
-    }
-
-    @Override
-    public void OnEndCompleted(Exception ex) {
-
-    }
-
-    @Override
-    public void OnConnectCompleted(Exception ex) {
-
-    }
-
-    public String getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
-    }
-
-    public byte[] getCardData() {
-        return cardData;
-    }
-
-    public void setCardData(byte[] cardData) {
-        this.cardData = cardData;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getAgentCode() {
-        return agentCode;
-    }
-
-    public void setAgentCode(String agentCode) {
-        this.agentCode = agentCode;
-    }
-
-    public String getTerminateCode() {
-        return terminateCode;
-    }
-
-    public void setTerminateCode(String terminateCode) {
-        this.terminateCode = terminateCode;
-    }
-
-    public String getMachineCode() {
-        return machineCode;
-    }
-
-    public void setMachineCode(String machineCode) {
-        this.machineCode = machineCode;
-    }
 }

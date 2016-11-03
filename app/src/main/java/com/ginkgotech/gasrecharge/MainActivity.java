@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
 
     private CardQueryModel cardQueryModel;
 
-    private NetworkServer networkServer;
-
     private ImageButton btnQuery;
 
     private int action = 0;
@@ -56,76 +54,17 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
 
         setContentView(R.layout.activity_main);
 
-        networkServer = new NetworkServer();
-        networkServer.setBusinessResponse(this);
+        cardQueryModel = new CardQueryModel(this);
+        cardQueryModel.setBusinessResponse(this);
 
-        cardQueryModel = new CardQueryModel();
         btnQuery = (ImageButton) findViewById(R.id.btnQuery);
         btnQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                networkServer.connect();
+                cardQueryModel.ready();
                 action = ACTION_QUERY;
             }
         });
-
-//        btnCareQuery = (Button) findViewById(R.id.btnCardQuery);
-//        btnCareQuery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                tvCareInfo.setText("Click Care Query!");
-//                networkServer.connect();
-//            }
-//        });
-
-        //tvCareInfo = (TextView) findViewById(R.id.tvCardInfo);
-
-        //cardQueryModel = new CardQueryModel();
-    }
-
-    private void connectServer() {
-        AsyncServer.getDefault().connectSocket("120.25.121.156", 10020, new ConnectCallback() {
-            @Override
-            public void onConnectCompleted(Exception ex, AsyncSocket socket) {
-                handleConnectCompleted(ex, socket);
-            }
-        });
-    }
-
-    private void handleConnectCompleted(Exception ex, final AsyncSocket socket) {
-        if(ex != null) throw new RuntimeException(ex);
-
-        Util.writeAll(socket, protocol.getBytes(), new CompletedCallback() {
-            @Override
-            public void onCompleted(Exception ex) {
-                if (ex != null) throw new RuntimeException(ex);
-                System.out.println("[Client] Successfully wrote message");
-            }
-        });
-
-        socket.setDataCallback(new DataCallback() {
-            @Override
-            public void onDataAvailable(DataEmitter emitter, ByteBufferList bb) {
-                System.out.println("[Client] Received Message " + new String(bb.getAllByteArray()));
-            }
-        });
-
-        socket.setClosedCallback(new CompletedCallback() {
-            @Override
-            public void onCompleted(Exception ex) {
-                if(ex != null) throw new RuntimeException(ex);
-                System.out.println("[Client] Successfully closed connection");
-            }
-        });
-
-        socket.setEndCallback(new CompletedCallback() {
-            @Override
-            public void onCompleted(Exception ex) {
-                if(ex != null) throw new RuntimeException(ex);
-                System.out.println("[Client] Successfully end connection");
-            }
-        });
-
     }
 
     @Override
@@ -139,11 +78,10 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
 
     @Override
     public void OnDataAvailable(String recv) {
-        cardQueryModel.setRawData(recv);
         //tvCareInfo.setText(recv);
         handler.sendEmptyMessage(MSG_UPDATE_UI);
 
-        networkServer.close();
+        //networkServer.close();
     }
 
     @Override
@@ -170,13 +108,10 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
             String sendMsg = "";
             switch (action) {
                 case ACTION_QUERY:
-                    sendMsg = cardQueryModel.packageData();
+                    cardQueryModel.request();
                     break;
                 default:
                     break;
-            }
-            if (!TextUtils.isEmpty(sendMsg)) {
-                networkServer.write(sendMsg);
             }
 
         } else {
