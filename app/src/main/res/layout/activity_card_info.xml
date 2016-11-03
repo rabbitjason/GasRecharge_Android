@@ -4,8 +4,6 @@
     android:id="@+id/activity_card_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ginkgotech.gasrecharge.CardInfoActivity"
     android:background="@color/background">
     <LinearLayout
@@ -13,25 +11,225 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/headerHeight"
+            android:text="用户信息"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#FF8C00"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@color/background"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/itemHeight"
             android:orientation="horizontal"
             android:background="@color/white"
             android:gravity="center_vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/itemMarginLeft"
+                android:layout_marginLeft="@dimen/itemMarginLeft"
                 android:text="用户名称:"
                 android:textColor="@color/itemColor"
                 android:textSize="@dimen/itemTextSize"/>
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itemHeight"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/itemMarginLeft"
+                android:text="用气地址:"
+                android:textColor="@color/itemColor"
+                android:textSize="@dimen/itemTextSize"/>
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itemHeight"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/itemMarginLeft"
+                android:text="卡上气量:"
+                android:textColor="@color/itemColor"
+                android:textSize="@dimen/itemTextSize"/>
+            <TextView
+                android:id="@+id/tvGasCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itemHeight"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/itemMarginLeft"
+                android:text="用户类型:"
+                android:textColor="@color/itemColor"
+                android:textSize="@dimen/itemTextSize"/>
+            <TextView
+                android:id="@+id/tvUserType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itemHeight"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/itemMarginLeft"
+                android:text="未圈存气量:"
+                android:textColor="@color/itemColor"
+                android:textSize="@dimen/itemTextSize"/>
+            <TextView
+                android:id="@+id/tvUnSaveGasCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itemHeight"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/itemMarginLeft"
+                android:text="最近购气时间:"
+                android:textColor="@color/itemColor"
+                android:textSize="@dimen/itemTextSize"/>
+            <TextView
+                android:id="@+id/tvLastDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itemHeight"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/itemMarginLeft"
+                android:text="本年阶梯用气量:"
+                android:textColor="@color/itemColor"
+                android:textSize="@dimen/itemTextSize"/>
+            <TextView
+                android:id="@+id/tvLadderGasCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/background"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itemHeight"
+            android:text="您没有未圈存的气量，请返回选择【扫码购气】"
+            android:textColor="@color/itemColor"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@color/white"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@color/background"/>
 
     </LinearLayout>
 

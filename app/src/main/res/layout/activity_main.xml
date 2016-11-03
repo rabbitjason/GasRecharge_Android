@@ -10,7 +10,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="match_parent"
@@ -104,6 +107,7 @@
             android:background="@color/background"/>
 
         <TextView
+            android:id="@+id/tvContacts"
             android:layout_width="match_parent"
             android:layout_height="@dimen/headerHeight"
             android:text="联系客服"

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_contacts"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.ginkgotech.gasrecharge.ContactsActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/headerHeight"
+        android:text="联系客服"
+        android:textColor="@color/white"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="#FF8C00"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="客服电话: 027-85252503  027-86807201"
+            android:textColor="@color/itemColor"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="15dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#BFBFBF"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/background"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="联系地址: 武汉市青山区工业路44号，武钢华润燃气客户服务中心"
+            android:textColor="@color/itemColor"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@color/white"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#BFBFBF"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvReturn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/headerHeight"
+        android:layout_alignParentBottom="true"
+        android:text="返回"
+        android:textColor="@color/white"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="#FF8C00"/>
+
+</RelativeLayout>

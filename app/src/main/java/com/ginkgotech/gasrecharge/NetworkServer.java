@@ -86,14 +86,6 @@ public class NetworkServer {
             return;
         }
 
-//        Util.writeAll(socket, protocol.getBytes(), new CompletedCallback() {
-//            @Override
-//            public void onCompleted(Exception ex) {
-//                if (ex != null) throw new RuntimeException(ex);
-//                System.out.println("[Client] Successfully wrote message");
-//            }
-//        });
-
         this.mSocket = socket;
 
         socket.setDataCallback(new DataCallback() {
