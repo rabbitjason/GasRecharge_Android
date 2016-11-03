@@ -7,4 +7,7 @@ package com.ginkgotech.gasrecharge.model;
 public class Card {
     private String cardType;
     private byte []cardData = new byte[512];
+    private byte []oldPassword = new byte[6];
+    private byte []newpassword = new byte[6];
+
 }
