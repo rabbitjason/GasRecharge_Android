@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_gas_input"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.ginkgotech.gasrecharge.GasInputActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/headerHeight"
+            android:text="请输入购气量（单位：立方米）"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#FF8C00"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@color/background"/>
+
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/itemColor"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:background="@color/white"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/background"/>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:rowCount="4"
+            android:columnCount="4">
+            <ImageView
+                android:id="@+id/btnOne"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_one"/>
+
+            <ImageView
+                android:id="@+id/btnTwo"
+                android:scaleType="centerCrop"
+                android:layout_margin="5dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:src="@mipmap/key_two"/>
+
+            <ImageView
+                android:id="@+id/btnThree"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_three"/>
+
+            <ImageView
+                android:id="@+id/btnDel"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:layout_rowSpan="2"
+                android:src="@mipmap/key_del"/>
+
+            <ImageView
+                android:id="@+id/btnFour"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_four"/>
+
+            <ImageView
+                android:id="@+id/btnFive"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_five"/>
+
+            <ImageView
+                android:id="@+id/btnSix"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_six"/>
+
+            <ImageView
+                android:id="@+id/btnSeven"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_seven"/>
+
+            <ImageView
+                android:id="@+id/btnEight"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_eight"/>
+
+            <ImageView
+                android:id="@+id/btnNine"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_nine"/>
+
+            <ImageView
+                android:id="@+id/btnConfirm"
+                android:layout_rowSpan="2"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_confirm"/>
+
+            <ImageView
+                android:id="@+id/btnZero"
+                android:layout_columnSpan="2"
+                android:scaleType="centerCrop"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="5dp"
+                android:src="@mipmap/key_zero"/>
+
+        </GridLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/background"/>
+
+        <TextView
+            android:id="@+id/tvReturn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/headerHeight"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#FF8C00"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

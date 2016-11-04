@@ -1,5 +1,6 @@
 package com.ginkgotech.gasrecharge;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
     private CardQueryModel cardQueryModel;
 
     private ImageButton btnQuery;
+    private TextView tvContacts;
 
     private int action = 0;
 
@@ -57,12 +59,28 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
         cardQueryModel = new CardQueryModel(this);
         cardQueryModel.setBusinessResponse(this);
 
+        initView();
+
+
+    }
+
+    private void initView() {
+
         btnQuery = (ImageButton) findViewById(R.id.btnQuery);
         btnQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cardQueryModel.ready();
                 action = ACTION_QUERY;
+            }
+        });
+
+        tvContacts = (TextView) findViewById(R.id.tvContacts);
+        tvContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CardInfoActivity" />
-        <activity android:name=".ContactsActivity"></activity>
+        <activity android:name=".ContactsActivity" />
+        <activity android:name=".GasInputActivity"></activity>
     </application>
 
 </manifest>
