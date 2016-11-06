@@ -9,8 +9,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/headerHeight"
@@ -21,18 +22,14 @@
             android:gravity="center"
             android:background="#FF8C00"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:background="@color/background"/>
 
         <TextView
             android:id="@+id/tvCount"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="100"
+            android:text="0"
             android:textColor="@color/itemColor"
             android:textSize="35sp"
             android:textStyle="bold"
@@ -45,9 +42,9 @@
 
         <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="260dp"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:layout_gravity="center"
             android:rowCount="4"
             android:columnCount="4">
             <ImageView
@@ -55,6 +52,7 @@
                 android:scaleType="centerCrop"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="5dp"
                 android:src="@mipmap/key_one"/>
 
@@ -64,6 +62,7 @@
                 android:layout_margin="5dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_two"/>
 
             <ImageView
@@ -71,6 +70,7 @@
                 android:scaleType="centerCrop"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:layout_margin="5dp"
                 android:src="@mipmap/key_three"/>
 
@@ -80,6 +80,7 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:layout_rowSpan="2"
                 android:src="@mipmap/key_del"/>
 
@@ -89,6 +90,7 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_four"/>
 
             <ImageView
@@ -97,6 +99,7 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_five"/>
 
             <ImageView
@@ -113,6 +116,7 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_seven"/>
 
             <ImageView
@@ -121,6 +125,7 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_eight"/>
 
             <ImageView
@@ -129,6 +134,7 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_nine"/>
 
             <ImageView
@@ -138,6 +144,7 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_confirm"/>
 
             <ImageView
@@ -147,29 +154,63 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_zero"/>
 
         </GridLayout>
 
-        <View
+        <TextView
+            android:id="@+id/tvPrice"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:background="@color/background"/>
-
-        <TextView
-            android:id="@+id/tvReturn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/headerHeight"
-            android:text="返回"
-            android:textColor="@color/white"
-            android:textSize="23sp"
-            android:textStyle="bold"
             android:gravity="center"
-            android:background="#FF8C00"/>
+            android:text="应付金额: 0元"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/itemColor"
+            android:background="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#FF8C00">
+
+            <TextView
+                android:id="@+id/tvReturn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/headerHeight"
+                android:layout_weight="1"
+                android:text="返回"
+                android:textColor="@color/white"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+            <View
+                android:id="@+id/viewDivide"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+
+            <TextView
+                android:id="@+id/tvAction"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/headerHeight"
+                android:layout_weight="1"
+                android:text="付款"
+                android:textColor="@color/white"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

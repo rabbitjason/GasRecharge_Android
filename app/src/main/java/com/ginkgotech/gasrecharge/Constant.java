@@ -6,6 +6,6 @@ package com.ginkgotech.gasrecharge;
 
 public class Constant {
     public static String TRANSACTION_CODE_QUERY = "2001";
-
+    public static String TRANSACTION_CODE_ALIPAY = "20021";
 
 }

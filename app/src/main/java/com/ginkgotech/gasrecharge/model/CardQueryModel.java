@@ -16,11 +16,11 @@ public class CardQueryModel {
 
     private Context mContext;
 
-    private Pos pos;
+    public Pos pos;
 
-    private Customer customer;
+    public Card card;
 
-    private Card card;
+    public Customer customer;
 
     public CardQueryModel(Context context) {
         this.mContext = context;
@@ -32,9 +32,7 @@ public class CardQueryModel {
     }
 
     public void request() {
-
         NetworkServer.getInstance().write(packageQueryData());
-
     }
 
     private String packageQueryData() {
@@ -56,9 +54,31 @@ public class CardQueryModel {
         //todo read card information
         card = new Card();
         card.setCardType("1");
-        card.setCardData(GasUtils.hexStringToBytes("a2131091ffff8115ffffffffffffffffffff01ffffd27600000400ffffffffff7050635a005c5e00320100000010061805ef51000000000202ef0000000000000000000000000000000000000000030094ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffff01201606e4000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990929400ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"));
+        card.setCardData(GasUtils.hexStringToBytes("A2131091FFFF8115FFFFFFFFFFFFFFFFFFFF01FFFFD27600000400FFFFFFFFFF5250635A005F3E003201000000100A1305EF51000000000303EF0000000000000000000000000000000000000000030094FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00FFFFFFFFFFFFFFFFFFFFFFFF01201610D9000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990956200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"));
+
+        NetworkServer.getInstance().connect();
 
         return true;
+    }
+
+    //73|0|先锋读卡成功|1|99909562|丁天智|青山绿水花园8-3-903|0|360|2.53|20160826|0|0026||0.72|0|
+    public void onMessage(String recv) {
+        String[] fields = recv.split("\\|");
+        customer = new Customer();
+        int pos = 3;
+        card.setCardType(fields[pos]);
+        customer.setUserCode(fields[++pos]);
+        customer.setUserName(fields[++pos]);
+        customer.setUserAddress(fields[++pos]);
+        customer.setGasCount(Long.valueOf(fields[++pos]));
+        customer.setLadderGasCount(Long.valueOf(fields[++pos]));
+        customer.setUnitPrice(Float.valueOf(fields[++pos]));
+        customer.setLastDate(fields[++pos]);
+        customer.setBuyTimes(Integer.valueOf(fields[++pos]));
+        customer.setUserType(fields[++pos]);
+        customer.setMeterCode(fields[++pos]);
+        customer.setAdvancePayment(Float.valueOf(fields[++pos]));
+        customer.setUnSaveGasCount(Integer.valueOf(fields[++pos]));
     }
 
 }

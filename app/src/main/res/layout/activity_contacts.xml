@@ -31,7 +31,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:padding="15dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:background="@color/white"/>
         <View
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="30dp"
             android:background="@color/background"/>
 
         <TextView
@@ -49,7 +49,7 @@
             android:padding="15dp"
             android:text="联系地址: 武汉市青山区工业路44号，武钢华润燃气客户服务中心"
             android:textColor="@color/itemColor"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:background="@color/white"/>
         <View

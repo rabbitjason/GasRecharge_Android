@@ -1,5 +1,9 @@
 package com.ginkgotech.gasrecharge;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -64,5 +68,19 @@ public class GasUtils {
      */
     private static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    public static void showMessageDialog(Context context, String title, String msg) {
+        new AlertDialog.Builder(context)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(title)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
     }
 }

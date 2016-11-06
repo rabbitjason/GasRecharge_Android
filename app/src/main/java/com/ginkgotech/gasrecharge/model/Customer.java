@@ -10,14 +10,14 @@ public class Customer {
     private String userName;
     private String userAddress;
     private long gasCount;
-    private long ladder_gas_count;
+    private long ladderGasCount;
     private float unitPrice;
     private String lastDate;
     private int buyTimes;
     private String userType;
     private String meterCode;
     private float advancePayment;
-    private long unsaveGasCount;
+    private int unSaveGasCount;
 
     public Customer() {
 
@@ -55,12 +55,12 @@ public class Customer {
         this.gasCount = gasCount;
     }
 
-    public long getLadder_gas_count() {
-        return ladder_gas_count;
+    public long getLadderGasCount() {
+        return ladderGasCount;
     }
 
-    public void setLadder_gas_count(long ladder_gas_count) {
-        this.ladder_gas_count = ladder_gas_count;
+    public void setLadderGasCount(long ladderGasCount) {
+        this.ladderGasCount = ladderGasCount;
     }
 
     public float getUnitPrice() {
@@ -111,11 +111,11 @@ public class Customer {
         this.advancePayment = advancePayment;
     }
 
-    public long getUnsaveGasCount() {
-        return unsaveGasCount;
+    public int getUnSaveGasCount() {
+        return unSaveGasCount;
     }
 
-    public void setUnsaveGasCount(long unsaveGasCount) {
-        this.unsaveGasCount = unsaveGasCount;
+    public void setUnSaveGasCount(int unSaveGasCount) {
+        this.unSaveGasCount = unSaveGasCount;
     }
 }

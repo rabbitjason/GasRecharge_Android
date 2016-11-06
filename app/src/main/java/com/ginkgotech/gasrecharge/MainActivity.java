@@ -31,24 +31,38 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
     public static final int ACTION_QUERY = 101;
     public static final int ACTION_SAVE =  102;
 
-    public static final int MSG_UPDATE_UI = 201;
-                               //0567|2001|1|a2131091ffff8115ffffffffffffffffffff01ffffd27600000400ffffffffff7050635a005c5e00320100000010061805ef51000000000202ef0000000000000000000000000000000000000000030094ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffff01201606e4000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990929400ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|20161102|193958|200001|0123456789|75621477
+    public static final int MSG_RESPONSE_FAILED = 200;
+    public static final int MSG_RESPONSE_SUCCESSFULLY = 201;
+
     private String protocol = "0567|2001|1|a2131091ffff8115ffffffffffffffffffff01ffffd27600000400ffffffffff7050635a005c5e00320100000010061805ef51000000000202ef0000000000000000000000000000000000000000030094ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffff01201606e4000000000000000000000000000000000000000000000000000000000000000000000000000001000800000000099990929400ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|20160905|171025|200001|0123456789|75621477";
 
     private CardQueryModel cardQueryModel;
 
-    private ImageButton btnQuery;
+    private ImageButton btnQuery, btnPay;
     private TextView tvContacts;
 
     private int action = 0;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            if (MSG_UPDATE_UI == msg.what) {
-//                tvCareInfo.setText(cardQueryModel.getRawData());
+            if (MSG_RESPONSE_FAILED == msg.what) {
+                String responseDesc = (String)msg.obj;
+                GasUtils.showMessageDialog(MainActivity.this,"信息",responseDesc);
+            } else if (MSG_RESPONSE_SUCCESSFULLY == msg.what) {
+                String recv = (String)msg.obj;
+                onHandleMessage(recv);
             }
         }
     };
+
+    private void onHandleMessage(String recv) {
+        if (ACTION_QUERY == action) {
+            cardQueryModel.onMessage(recv);
+            CardInfoActivity.cardQueryModel = cardQueryModel;
+            Intent intent = new Intent(MainActivity.this, CardInfoActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
 
         initView();
 
-
     }
 
     private void initView() {
@@ -72,6 +85,15 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
             public void onClick(View v) {
                 cardQueryModel.ready();
                 action = ACTION_QUERY;
+            }
+        });
+
+        btnPay = (ImageButton) findViewById(R.id.btnPay);
+        btnPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, GasInputActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -96,10 +118,19 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
 
     @Override
     public void OnDataAvailable(String recv) {
-        //tvCareInfo.setText(recv);
-        handler.sendEmptyMessage(MSG_UPDATE_UI);
+        String[] fields = recv.split("\\|");
+        String responseCode = fields[1];
+        Message msg = new Message();
+        if (!responseCode.equals("0")) {
+            msg.what = MSG_RESPONSE_FAILED;
+            msg.obj = fields[2];
+            return;
+        } else {
+            msg.what = MSG_RESPONSE_SUCCESSFULLY;
+            msg.obj = recv;
+        }
+        handler.sendMessage(msg);
 
-        //networkServer.close();
     }
 
     @Override
@@ -123,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
     @Override
     public void OnConnectCompleted(Exception ex) {
         if (ex == null) {
-            String sendMsg = "";
             switch (action) {
                 case ACTION_QUERY:
                     cardQueryModel.request();
@@ -131,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements BusinessResponse 
                 default:
                     break;
             }
-
         } else {
+            GasUtils.showMessageDialog(MainActivity.this, "信息","网络连接失败！");
             Log.v(TAG, "[Client] Failed connection!");
         }
 
