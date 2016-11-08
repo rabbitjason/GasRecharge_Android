@@ -13,12 +13,14 @@ import org.w3c.dom.Text;
 
 public class GasInputActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView tvCount, tvPrice;
+    private TextView tvCount, tvPrice, tvReturn, tvAction;
     private StringBuffer strCount;
 
     private View btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight;
-    private View btnNine, btnZero, btnDel, btnConfirm;
+    private View btnNine, btnZero, btnDel;
 
+    private double gasPrice = 0.0;
+    private int gasCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +67,31 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
         btnDel = findViewById(R.id.btnDel);
         btnDel.setOnClickListener(this);
 
-        btnConfirm = findViewById(R.id.btnConfirm);
-        btnConfirm.setOnClickListener(this);
+        tvReturn = (TextView) findViewById(R.id.tvReturn);
+        tvReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        tvAction = (TextView) findViewById(R.id.tvAction);
+        tvAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (gasCount > 0) {
+                    ModelControl.getInstance().aliPay(gasCount, gasPrice);
+                }
+            }
+        });
+
     }
 
     private void updatePrice(String count) {
         if (!TextUtils.isEmpty(count)) {
-            long gasCount = Long.valueOf(count);
-            double price = PriceTable.getInstance().getPrice("0026", 360, gasCount);
-            tvPrice.setText(String.format("应付金额: %.2f (元)", price));
+            gasCount = Integer.valueOf(count);
+            gasPrice = PriceTable.getInstance().getPrice("0026", 360, gasCount);
+            tvPrice.setText(String.format("应付金额: %.2f (元)", gasPrice));
         } else {
             tvPrice.setText("");
         }
@@ -139,9 +157,6 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
 
-            case R.id.btnConfirm:
-
-                break;
             default:
                 break;
 

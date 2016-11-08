@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.ginkgotech.gasrecharge.model.CardQueryModel;
 import com.ginkgotech.gasrecharge.model.Customer;
+import com.ginkgotech.gasrecharge.model.GasAlipayModel;
 
 import org.w3c.dom.Text;
 
@@ -71,8 +72,10 @@ public class CardInfoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (customer.getGasCount() == 0) {
+
                             Intent intent = new Intent(CardInfoActivity.this, GasInputActivity.class);
                             startActivity(intent);
+
                         }
                     }
                 });

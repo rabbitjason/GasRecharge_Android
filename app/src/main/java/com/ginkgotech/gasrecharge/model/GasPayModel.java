@@ -7,34 +7,34 @@ import com.ginkgotech.gasrecharge.GasUtils;
 import com.ginkgotech.gasrecharge.NetworkServer;
 
 /**
- * Created by Administrator on 2016/11/5.
+ * Created by lipple-server on 16/11/8.
  */
 
-public class GasAlipayModel {
+public class GasPayModel {
 
     private Context mContext;
 
     public Pos pos;
-
-    public String cardType;
     public String userCode;
     public int gasCount;
     public double gasPrice;
-    public String payCode;         //缴费流水号
-    public String alipayCode;      //支付宝订单号
-    public byte []QRCodeData = new byte[4096]; //二维码图片
+    public String payCode;
+    public String alipayCode;
+    public Card card;
 
-    public GasAlipayModel(Context context) {
+    public GasPayModel(Context context) {
         this.mContext = context;
     }
 
     private String packageData() {
         String sendData = "";
-        sendData = Constant.TRANSACTION_CODE_ALIPAY + "|" + cardType + "|" + userCode + "|";
-        sendData += String.valueOf(gasCount) + "|" + String.valueOf(gasPrice) + "|";
-        sendData += GasUtils.getCurrentDate() + "|" + GasUtils.getCurrentTime() + "|"
+
+        sendData = Constant.TRANSACTION_CODE_PAY + "|" + card.getCardType() + "|" + userCode + "|"
+                + String.valueOf(gasCount) + "|" + String.valueOf(gasPrice) + "|"
+                + "0" + "|" + GasUtils.bytesToHexString(card.getCardData()) + "|"
+                +  GasUtils.getCurrentDate() + "|" + GasUtils.getCurrentTime() + "|"
                 + pos.getAgentCode() + "|" + pos.getTerminateCode() + "|" + pos.getMachineCode()
-                + "||";
+                + "|" + payCode + "|" + alipayCode;
 
         int len = sendData.length() + 5;
         sendData = String.format("%04d", len) + "|" + sendData;
@@ -56,10 +56,6 @@ public class GasAlipayModel {
     }
 
     public void onMessage(String recv) {
-        String[] fields = recv.split("\\|");
-        int pos = 3;
-        payCode = fields[pos];
-        alipayCode = fields[++pos];
-        QRCodeData = GasUtils.hexStringToBytes(fields[++pos]);
+
     }
 }

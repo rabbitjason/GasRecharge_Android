@@ -28,7 +28,7 @@ public class CardQueryModel {
 
     public void setBusinessResponse(BusinessResponse businessResponse) {
         this.mBusinessResponse = businessResponse;
-        NetworkServer.getInstance().setBusinessResponse(mBusinessResponse);
+
     }
 
     public void request() {

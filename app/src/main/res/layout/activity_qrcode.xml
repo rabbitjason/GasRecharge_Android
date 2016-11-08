@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_qrcode"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ginkgotech.gasrecharge.QRCodeActivity"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/headerHeight"
+            android:text="扫码支付"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="#FF8C00"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+        <ImageView
+            android:id="@+id/imgQRCode"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+        <TextView
+            android:id="@+id/tvTips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="打开手机支付宝,选择左上角[-]扫一扫\n进行扫码支付,支付成功,点击完成"
+            android:textSize="18sp"
+            android:textColor="@color/itemColor"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FF8C00"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tvReturn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/headerHeight"
+            android:layout_weight="1"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+        <View
+            android:id="@+id/viewDivide"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:id="@+id/tvAction"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/headerHeight"
+            android:layout_weight="1"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+    </LinearLayout>
+
+</RelativeLayout>
