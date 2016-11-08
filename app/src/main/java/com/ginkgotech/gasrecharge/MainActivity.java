@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
-    private ImageButton btnQuery, btnPay;
+    private ImageButton btnQuery, btnPay, btnSave;
     private TextView tvContacts;
 
     @Override
@@ -39,8 +39,15 @@ public class MainActivity extends AppCompatActivity {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, GasInputActivity.class);
-                startActivity(intent);
+                ModelControl.getInstance().queryCardInfo();
+            }
+        });
+
+        btnSave = (ImageButton) findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModelControl.getInstance().queryCardInfo();
             }
         });
 

@@ -95,7 +95,6 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
         } else {
             tvPrice.setText("");
         }
-
     }
 
     @Override

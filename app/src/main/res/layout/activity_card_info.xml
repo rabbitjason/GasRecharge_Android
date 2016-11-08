@@ -229,8 +229,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="您没有未圈存的气量，请返回选择【扫码购气】"
-            android:textColor="@color/itemColor"
+            android:textColor="#0099FF"
             android:textSize="16sp"
+            android:textStyle="bold"
             android:gravity="center"
             android:background="@color/white"/>
 

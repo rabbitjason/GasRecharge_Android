@@ -61,7 +61,7 @@ public class CardInfoActivity extends AppCompatActivity {
         tvAction = (TextView) findViewById(R.id.tvAction);
         if (customer.getGasCount() != 0) {
             tvGasCount.setText(String.valueOf(customer.getGasCount()));
-            tvTip.setText("卡上有气量无法购气，请将卡上气量转入表后再购气");
+            tvTip.setText("您的卡上已有气量，无法购气！\n将卡上气量上表后，方可购气。");
             tvAction.setVisibility(View.GONE);
             viewDivide.setVisibility(View.GONE);
         } else {

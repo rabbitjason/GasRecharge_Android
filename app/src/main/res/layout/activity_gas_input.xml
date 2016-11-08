@@ -102,6 +102,7 @@
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
                 android:layout_margin="5dp"
+                android:layout_gravity="fill"
                 android:src="@mipmap/key_six"/>
 
             <ImageView
