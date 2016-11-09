@@ -38,16 +38,14 @@ public class GasPayModel {
 
         int len = sendData.length() + 5;
         sendData = String.format("%04d", len) + "|" + sendData;
-
         return sendData;
     }
 
     public boolean ready() {
         //todo read pos config information
         pos = new Pos("200001", "0123456789", "75621477");
-
+        card = new Card();
         NetworkServer.getInstance().connect();
-
         return true;
     }
 
@@ -56,6 +54,5 @@ public class GasPayModel {
     }
 
     public void onMessage(String recv) {
-
     }
 }

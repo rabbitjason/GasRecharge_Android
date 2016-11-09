@@ -42,5 +42,6 @@ public class QRCodeActivity extends AppCompatActivity {
 
         imgQRCode = (ImageView) findViewById(R.id.imgQRCode);
         imgQRCode.setImageBitmap(GasUtils.byteToBitmap(QRCodeData));
+        ModelControl.getInstance().pay();
     }
 }

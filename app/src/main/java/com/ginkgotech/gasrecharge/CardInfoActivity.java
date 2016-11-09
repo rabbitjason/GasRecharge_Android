@@ -72,10 +72,9 @@ public class CardInfoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (customer.getGasCount() == 0) {
-
                             Intent intent = new Intent(CardInfoActivity.this, GasInputActivity.class);
                             startActivity(intent);
-
+                            finish();
                         }
                     }
                 });

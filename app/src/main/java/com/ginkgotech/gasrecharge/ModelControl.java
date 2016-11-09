@@ -11,6 +11,8 @@ import com.ginkgotech.gasrecharge.model.CardQueryModel;
 import com.ginkgotech.gasrecharge.model.GasAlipayModel;
 import com.ginkgotech.gasrecharge.model.GasPayModel;
 
+import java.util.Arrays;
+
 /**
  * Created by lipple-server on 16/11/7.
  */
@@ -36,6 +38,9 @@ public class ModelControl implements BusinessResponse {
     private Context mContext;
 
     private byte [] recvBuf = new byte[4096];
+    private long recvSize = 0;
+    private long realSize = 0;
+    private boolean isRemain = false;
 
     private Handler msgHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -83,8 +88,11 @@ public class ModelControl implements BusinessResponse {
             QRCodeActivity.QRCodeData = gasAlipayModel.QRCodeData;
             Intent intent = new Intent(mContext, QRCodeActivity.class);
             mContext.startActivity(intent);
+        } else if (ACTION_PAY == currentAction) {
+            gasPayModel.onMessage(new String(recv));
         }
     }
+
 
     public void init(Context context) {
         this.mContext = context;
@@ -122,7 +130,7 @@ public class ModelControl implements BusinessResponse {
         gasPayModel.gasPrice = gasAlipayModel.gasPrice;
         gasPayModel.payCode = gasAlipayModel.payCode;
         gasPayModel.alipayCode = gasAlipayModel.alipayCode;
-
+        gasPayModel.card.setCardType(gasAlipayModel.cardType);
         gasPayModel.ready();
     }
 
@@ -137,19 +145,37 @@ public class ModelControl implements BusinessResponse {
 
     @Override
     public void OnDataAvailable(byte [] recv) {
-
-        String[] fields = (new String(recv)).split("\\|");
-        String responseCode = fields[1];
-        Message msg = new Message();
-        if (!responseCode.equals("0")) {
-            msg.what = MSG_RESPONSE_FAILED;
-            msg.obj = fields[2];
-            return;
+        if (!isRemain) {
+            recvBuf = recv;
+            String[] fields = (new String(recv)).split("\\|");
+            String responseCode = fields[1];
+            realSize = Long.valueOf(fields[0]);
+            recvSize = recv.length;
+            if (recvSize > realSize) {
+                Message msg = new Message();
+                if (!responseCode.equals("0")) {
+                    msg.what = MSG_RESPONSE_FAILED;
+                    msg.obj = fields[2];
+                    return;
+                } else {
+                    msg.what = MSG_RESPONSE_SUCCESSFULLY;
+                    msg.obj = recvBuf;
+                }
+                msgHandler.sendMessage(msg);
+            } else {
+                isRemain = true;
+            }
         } else {
+            recvSize += recv.length;
+            for (int i = recvBuf.length-1, j = 0; j < recv.length || i < 4096; ++i, ++j) {
+                recvBuf[i] = recv[j];
+            }
+            Message msg = new Message();
             msg.what = MSG_RESPONSE_SUCCESSFULLY;
-            msg.obj = recv;
+            msg.obj = recvBuf;
+            msgHandler.sendMessage(msg);
+            isRemain = false;
         }
-        msgHandler.sendMessage(msg);
     }
 
     @Override
@@ -182,6 +208,9 @@ public class ModelControl implements BusinessResponse {
                     break;
                 case ACTION_ALIPAY:
                     gasAlipayModel.request();
+                    break;
+                case ACTION_PAY:
+                    gasPayModel.request();
                     break;
                 default:
                     break;

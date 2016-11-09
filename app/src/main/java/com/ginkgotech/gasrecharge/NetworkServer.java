@@ -22,7 +22,7 @@ import java.nio.ByteBuffer;
 public class NetworkServer {
     public static final String TAG = "NetworkServer";
     public static String SERVER_IP = "120.25.121.156";
-    public static int SERVER_PORT = 10020;
+    public static int SERVER_PORT = 12020;
 
     private AsyncSocket mSocket;
 

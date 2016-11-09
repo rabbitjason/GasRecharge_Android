@@ -81,6 +81,7 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View v) {
                 if (gasCount > 0) {
                     ModelControl.getInstance().aliPay(gasCount, gasPrice);
+                    finish();
                 }
             }
         });

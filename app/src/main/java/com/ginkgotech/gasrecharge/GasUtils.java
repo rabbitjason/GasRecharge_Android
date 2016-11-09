@@ -23,7 +23,7 @@ public class GasUtils {
         InputStream input = null;
         Bitmap bitmap = null;
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 8;
+        options.inSampleSize = 1;
         input = new ByteArrayInputStream(imgByte);
         SoftReference softRef = new SoftReference(BitmapFactory.decodeStream(
                 input, null, options));
