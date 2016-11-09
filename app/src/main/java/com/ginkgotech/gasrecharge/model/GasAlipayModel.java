@@ -6,6 +6,9 @@ import com.ginkgotech.gasrecharge.Constant;
 import com.ginkgotech.gasrecharge.GasUtils;
 import com.ginkgotech.gasrecharge.NetworkServer;
 
+import java.util.Arrays;
+
+
 /**
  * Created by Administrator on 2016/11/5.
  */
@@ -55,11 +58,18 @@ public class GasAlipayModel {
         NetworkServer.getInstance().write(packageData());
     }
 
-    public void onMessage(String recv) {
-        String[] fields = recv.split("\\|");
-        int pos = 3;
-        payCode = fields[pos];
+    public void onMessage(byte[] recv) {
+        String[] fields = (new String(recv)).split("\\|");
+        int pos = 0;
+        int index = 0;
+        String size = fields[pos];
+        index = size.length() + 1;
+        String retCode = fields[++pos];
+        index += retCode.length() + 1;
+        payCode = fields[++pos];
+        index += payCode.length() + 1;
         alipayCode = fields[++pos];
-        QRCodeData = GasUtils.hexStringToBytes(fields[++pos]);
+        index += alipayCode.length() + 1;
+        QRCodeData = Arrays.copyOfRange(recv, index, recv.length - 1);
     }
 }

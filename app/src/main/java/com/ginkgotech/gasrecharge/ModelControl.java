@@ -35,13 +35,15 @@ public class ModelControl implements BusinessResponse {
 
     private Context mContext;
 
+    private byte [] recvBuf = new byte[4096];
+
     private Handler msgHandler = new Handler() {
         public void handleMessage(Message msg) {
             if (MSG_RESPONSE_FAILED == msg.what) {
                 String responseDesc = (String)msg.obj;
                 GasUtils.showMessageDialog(mContext, "信息", responseDesc);
             } else if (MSG_RESPONSE_SUCCESSFULLY == msg.what) {
-                String recv = (String)msg.obj;
+                byte[] recv = (byte[])msg.obj;
                 onHandleMessage(recv);
             } else if (MSG_NET_CONNECT_FAILED == msg.what) {
                 GasUtils.showMessageDialog(mContext, "信息","网络连接失败！");
@@ -70,9 +72,9 @@ public class ModelControl implements BusinessResponse {
         return instance;
     }
 
-    private void onHandleMessage(String recv) {
+    private void onHandleMessage(byte [] recv) {
         if (ACTION_QUERY == currentAction) {
-            cardQueryModel.onMessage(recv);
+            cardQueryModel.onMessage(new String(recv));
             CardInfoActivity.cardQueryModel = cardQueryModel;
             Intent intent = new Intent(mContext, CardInfoActivity.class);
             mContext.startActivity(intent);
@@ -120,7 +122,7 @@ public class ModelControl implements BusinessResponse {
         gasPayModel.gasPrice = gasAlipayModel.gasPrice;
         gasPayModel.payCode = gasAlipayModel.payCode;
         gasPayModel.alipayCode = gasAlipayModel.alipayCode;
-        
+
         gasPayModel.ready();
     }
 
@@ -134,9 +136,9 @@ public class ModelControl implements BusinessResponse {
     }
 
     @Override
-    public void OnDataAvailable(String recv) {
+    public void OnDataAvailable(byte [] recv) {
 
-        String[] fields = recv.split("\\|");
+        String[] fields = (new String(recv)).split("\\|");
         String responseCode = fields[1];
         Message msg = new Message();
         if (!responseCode.equals("0")) {

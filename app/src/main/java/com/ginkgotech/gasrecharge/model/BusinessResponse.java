@@ -8,7 +8,7 @@ public interface BusinessResponse {
 
     public void OnWriteCompleted(Exception ex);
 
-    public void OnDataAvailable(String recv);
+    public void OnDataAvailable(byte [] recv);
 
     public void OnCloseCompleted(Exception ex);
 

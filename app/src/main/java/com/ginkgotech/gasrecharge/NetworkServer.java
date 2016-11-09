@@ -1,5 +1,6 @@
 package com.ginkgotech.gasrecharge;
 
+import android.icu.text.DateFormat;
 import android.util.Log;
 
 import com.ginkgotech.gasrecharge.model.BusinessResponse;
@@ -11,6 +12,8 @@ import com.koushikdutta.async.Util;
 import com.koushikdutta.async.callback.CompletedCallback;
 import com.koushikdutta.async.callback.ConnectCallback;
 import com.koushikdutta.async.callback.DataCallback;
+
+import java.nio.ByteBuffer;
 
 /**
  * Created by Administrator on 2016/10/29.
@@ -24,6 +27,8 @@ public class NetworkServer {
     private AsyncSocket mSocket;
 
     private BusinessResponse mBusinessResponse;
+
+    private byte [] recvBuffer;
 
     private static volatile NetworkServer instance;
 
@@ -59,7 +64,6 @@ public class NetworkServer {
             @Override
             public void onConnectCompleted(Exception ex, AsyncSocket socket) {
                 handleConnectCompleted(ex, socket);
-
             }
         });
     }
@@ -93,7 +97,12 @@ public class NetworkServer {
             @Override
             public void onDataAvailable(DataEmitter emitter, ByteBufferList bb) {
                 //System.out.println("[Client] Received Message " + new String(bb.getAllByteArray()));
-                mBusinessResponse.OnDataAvailable(new String(bb.getAllByteArray()));
+                //ByteBuffer[] byteBuffers = bb.getAllArray();
+                recvBuffer = bb.getAllByteArray();
+                boolean hasRemaining = bb.hasRemaining();
+                if (!hasRemaining) {
+                    mBusinessResponse.OnDataAvailable(recvBuffer);
+                }
             }
         });
 
@@ -105,6 +114,7 @@ public class NetworkServer {
                 //System.out.println("[Client] Successfully closed connection");
             }
         });
+
 
         socket.setEndCallback(new CompletedCallback() {
             @Override
