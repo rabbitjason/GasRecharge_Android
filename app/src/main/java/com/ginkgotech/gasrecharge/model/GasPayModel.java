@@ -23,11 +23,14 @@ public class GasPayModel {
     public String alipayCode;
     public Card card;
 
-    public String responseCode = "";
+    public String responseCode = "unknown";
     public String responseDesc;
 
     public GasPayModel(Context context) {
         this.mContext = context;
+        card = new Card();
+        pos = new Pos("200001", "0123456789", "75621477");
+        responseCode = "unkonwn";
     }
 
     private String packageData() {
@@ -47,9 +50,7 @@ public class GasPayModel {
 
     public boolean ready() {
         //todo read pos config information
-        responseCode = "unkonwn";
-        pos = new Pos("200001", "0123456789", "75621477");
-        card = new Card();
+
         NetworkServer.getInstance().connect();
         return true;
     }
@@ -62,13 +63,18 @@ public class GasPayModel {
         String[] fields = recv.split("\\|");
         int pos = 0;
         responseCode = fields[++pos];
-        responseDesc = fields[++pos];
-        card.setCardType(fields[++pos]);
-        userCode = fields[++pos];
-        card.setOldPassword(GasUtils.hexStringToBytes(fields[++pos]));
-        card.setNewpassword(GasUtils.hexStringToBytes(fields[++pos]));
-        card.setCardData(GasUtils.hexStringToBytes(fields[++pos]));
-        ModelControl.getInstance().save();
+        if (responseCode.equals("0")) {
+            responseDesc = fields[++pos];
+            card.setCardType(fields[++pos]);
+            userCode = fields[++pos];
+            card.setOldPassword(GasUtils.hexStringToBytes(fields[++pos]));
+            card.setNewpassword(GasUtils.hexStringToBytes(fields[++pos]));
+            card.setCardData(GasUtils.hexStringToBytes(fields[++pos]));
+            ModelControl.getInstance().save();
+        } else {
+            GasUtils.showMessageDialog(mContext, "信息", responseDesc);
+        }
+
     }
 
 

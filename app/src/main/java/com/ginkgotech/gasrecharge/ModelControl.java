@@ -140,11 +140,23 @@ public class ModelControl implements BusinessResponse {
         gasPayModel.ready();
     }
 
+    public boolean isReadySave() {
+        if (gasPayModel.responseCode.equals("unknown")) {
+            return false;
+        }
+        return true;
+    }
+
     public void save() {
         currentAction = ACTION_SAVE;
         gasSaveModel.card = gasPayModel.card;
         gasSaveModel.userCode = gasPayModel.userCode;
         gasSaveModel.ready();
+    }
+
+    public void showPayStatus() {
+        Intent intent = new Intent(mContext, PayStatusActivity.class);
+        mContext.startActivity(intent);
     }
 
     @Override
@@ -197,7 +209,6 @@ public class ModelControl implements BusinessResponse {
 
     @Override
     public void OnEndCompleted(Exception ex) {
-
         if (ex != null) {
             Log.v(TAG, "end failed!");
         } else {

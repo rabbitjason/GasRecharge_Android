@@ -1,5 +1,6 @@
 package com.ginkgotech.gasrecharge;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,8 @@ public class QRCodeActivity extends AppCompatActivity {
 
     private ImageView imgQRCode;
 
-    private TimeCount time;
+    private boolean isSkip = false;
+
     //默认为180秒
     private static int duration = 180000;
 
@@ -32,7 +34,7 @@ public class QRCodeActivity extends AppCompatActivity {
         tvReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                time.cancel();
+                isSkip = true;
                 finish();
             }
         });
@@ -41,37 +43,20 @@ public class QRCodeActivity extends AppCompatActivity {
 
         imgQRCode = (ImageView) findViewById(R.id.imgQRCode);
         imgQRCode.setImageBitmap(GasUtils.byteToBitmap(QRCodeData));
-        ModelControl.getInstance().pay();
-        startTimeCount();
+        autoClosed();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        time.cancel();
+    private void autoClosed() {
+        new android.os.Handler().postDelayed(new Runnable() {
+            public void run() {
+                if (isSkip) {
+                    return;
+                }
+                QRCodeActivity.this.finish();
+                ModelControl.getInstance().showPayStatus();
+            }
+        }, duration);
     }
 
-    private void startTimeCount() {
-        time = new TimeCount(duration, 1000);
-        time.start();
-    }
 
-
-    class TimeCount extends CountDownTimer {
-        public TimeCount(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onFinish() {
-            // 如果计时器正常结束，则开始计步
-            time.cancel();
-            finish();
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-
-        }
-    }
 }

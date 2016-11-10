@@ -19,7 +19,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_centerVertical="true"
@@ -28,11 +28,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="请按照下列提示操作"
+            android:textColor="#0099FF"
+            android:textSize="26sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
             android:text="支付未完成，请选择【扫码购气】重新支付"
             android:textColor="#0099FF"
-            android:textSize="16sp"
-
-            />
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="支付已完成，请选择【用户圈存】进行圈存"
+            android:textColor="#0099FF"
+            android:textSize="16sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="请按下方返回键，回到主菜单操作"
+            android:textColor="#0099FF"
+            android:textSize="16sp"/>
         <LinearLayout
             android:id="@+id/llOk"
             android:layout_width="match_parent"
@@ -108,6 +130,7 @@
                 android:textSize="23sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
+
             <View
                 android:id="@+id/viewDivide"
                 android:layout_width="1dp"
