@@ -22,7 +22,9 @@
         <activity android:name=".CardInfoActivity" />
         <activity android:name=".ContactsActivity" />
         <activity android:name=".GasInputActivity" />
-        <activity android:name=".QRCodeActivity"></activity>
+        <activity android:name=".QRCodeActivity" />
+        <activity android:name=".PayStatusActivity" />
+        <activity android:name=".SaveStatusActivity"></activity>
     </application>
 
 </manifest>

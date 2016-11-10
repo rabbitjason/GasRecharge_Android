@@ -1,5 +1,6 @@
 package com.ginkgotech.gasrecharge;
 
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,10 @@ public class QRCodeActivity extends AppCompatActivity {
 
     private ImageView imgQRCode;
 
+    private TimeCount time;
+    //默认为180秒
+    private static int duration = 180000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,21 +32,46 @@ public class QRCodeActivity extends AppCompatActivity {
         tvReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                time.cancel();
                 finish();
             }
         });
 
         tvAction = (TextView) findViewById(R.id.tvAction);
-        tvAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ModelControl.getInstance().pay();
-                finish();
-            }
-        });
 
         imgQRCode = (ImageView) findViewById(R.id.imgQRCode);
         imgQRCode.setImageBitmap(GasUtils.byteToBitmap(QRCodeData));
         ModelControl.getInstance().pay();
+        startTimeCount();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        time.cancel();
+    }
+
+    private void startTimeCount() {
+        time = new TimeCount(duration, 1000);
+        time.start();
+    }
+
+
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            // 如果计时器正常结束，则开始计步
+            time.cancel();
+            finish();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
     }
 }

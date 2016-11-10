@@ -10,6 +10,7 @@ import com.ginkgotech.gasrecharge.model.BusinessResponse;
 import com.ginkgotech.gasrecharge.model.CardQueryModel;
 import com.ginkgotech.gasrecharge.model.GasAlipayModel;
 import com.ginkgotech.gasrecharge.model.GasPayModel;
+import com.ginkgotech.gasrecharge.model.GasSaveModel;
 
 import java.util.Arrays;
 
@@ -34,6 +35,7 @@ public class ModelControl implements BusinessResponse {
     private CardQueryModel cardQueryModel;
     private GasAlipayModel gasAlipayModel;
     private GasPayModel gasPayModel;
+    private GasSaveModel gasSaveModel;
 
     private Context mContext;
 
@@ -90,6 +92,8 @@ public class ModelControl implements BusinessResponse {
             mContext.startActivity(intent);
         } else if (ACTION_PAY == currentAction) {
             gasPayModel.onMessage(new String(recv));
+        } else if (ACTION_SAVE == currentAction) {
+            gasSaveModel.onMessage(new String(recv));
         }
     }
 
@@ -104,6 +108,8 @@ public class ModelControl implements BusinessResponse {
         gasAlipayModel = new GasAlipayModel(mContext);
 
         gasPayModel = new GasPayModel(mContext);
+
+        gasSaveModel = new GasSaveModel(mContext);
 
     }
 
@@ -134,6 +140,13 @@ public class ModelControl implements BusinessResponse {
         gasPayModel.ready();
     }
 
+    public void save() {
+        currentAction = ACTION_SAVE;
+        gasSaveModel.card = gasPayModel.card;
+        gasSaveModel.userCode = gasPayModel.userCode;
+        gasSaveModel.ready();
+    }
+
     @Override
     public void OnWriteCompleted(Exception ex) {
         if (ex != null) {
@@ -153,14 +166,8 @@ public class ModelControl implements BusinessResponse {
             recvSize = recv.length;
             if (recvSize > realSize) {
                 Message msg = new Message();
-                if (!responseCode.equals("0")) {
-                    msg.what = MSG_RESPONSE_FAILED;
-                    msg.obj = fields[2];
-                    return;
-                } else {
-                    msg.what = MSG_RESPONSE_SUCCESSFULLY;
-                    msg.obj = recvBuf;
-                }
+                msg.what = MSG_RESPONSE_SUCCESSFULLY;
+                msg.obj = recvBuf;
                 msgHandler.sendMessage(msg);
             } else {
                 isRemain = true;
@@ -211,6 +218,9 @@ public class ModelControl implements BusinessResponse {
                     break;
                 case ACTION_PAY:
                     gasPayModel.request();
+                    break;
+                case ACTION_SAVE:
+                    gasSaveModel.request();
                     break;
                 default:
                     break;

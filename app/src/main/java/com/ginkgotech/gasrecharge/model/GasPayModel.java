@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ginkgotech.gasrecharge.Constant;
 import com.ginkgotech.gasrecharge.GasUtils;
+import com.ginkgotech.gasrecharge.ModelControl;
 import com.ginkgotech.gasrecharge.NetworkServer;
 
 /**
@@ -21,6 +22,9 @@ public class GasPayModel {
     public String payCode;
     public String alipayCode;
     public Card card;
+
+    public String responseCode = "";
+    public String responseDesc;
 
     public GasPayModel(Context context) {
         this.mContext = context;
@@ -43,6 +47,7 @@ public class GasPayModel {
 
     public boolean ready() {
         //todo read pos config information
+        responseCode = "unkonwn";
         pos = new Pos("200001", "0123456789", "75621477");
         card = new Card();
         NetworkServer.getInstance().connect();
@@ -54,5 +59,17 @@ public class GasPayModel {
     }
 
     public void onMessage(String recv) {
+        String[] fields = recv.split("\\|");
+        int pos = 0;
+        responseCode = fields[++pos];
+        responseDesc = fields[++pos];
+        card.setCardType(fields[++pos]);
+        userCode = fields[++pos];
+        card.setOldPassword(GasUtils.hexStringToBytes(fields[++pos]));
+        card.setNewpassword(GasUtils.hexStringToBytes(fields[++pos]));
+        card.setCardData(GasUtils.hexStringToBytes(fields[++pos]));
+        ModelControl.getInstance().save();
     }
+
+
 }
