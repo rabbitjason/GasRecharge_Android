@@ -1,5 +1,7 @@
 package com.ginkgotech.gasrecharge.model;
 
+import java.lang.reflect.Method;
+
 /**
  * Created by Administrator on 2016/11/2.
  */
@@ -17,7 +19,7 @@ public class Pos {
     public Pos(String agentCode, String terminateCode, String machineCode) {
         this.agentCode = agentCode;
         this.terminateCode = terminateCode;
-        this.machineCode = machineCode;
+        this.machineCode = getSerialNumber();
     }
 
     public String getAgentCode() {
@@ -42,5 +44,17 @@ public class Pos {
 
     public void setMachineCode(String machineCode) {
         this.machineCode = machineCode;
+    }
+
+    public static String getSerialNumber(){
+        String serial = null;
+        try {
+            Class<?> c = Class.forName("android.os.SystemProperties");
+            Method get = c.getMethod("get", String.class);
+            serial = (String) get.invoke(c, "ro.serialno");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return serial;
     }
 }

@@ -6,7 +6,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.centerm.smartpos.aidl.memcard.AidlMemCard;
 import com.ginkgotech.gasrecharge.model.BusinessResponse;
+import com.ginkgotech.gasrecharge.model.Card4442;
 import com.ginkgotech.gasrecharge.model.CardQueryModel;
 import com.ginkgotech.gasrecharge.model.GasAlipayModel;
 import com.ginkgotech.gasrecharge.model.GasPayModel;
@@ -38,6 +40,9 @@ public class ModelControl implements BusinessResponse {
     private GasSaveModel gasSaveModel;
 
     private Context mContext;
+
+    private Card4442 card4442;
+    private AidlMemCard memCard;
 
     private byte [] recvBuf = new byte[4096];
     private long recvSize = 0;
@@ -111,9 +116,30 @@ public class ModelControl implements BusinessResponse {
 
         gasSaveModel = new GasSaveModel(mContext);
 
+        card4442 = new Card4442();
+
+    }
+
+    public void setMemCard(AidlMemCard memCard) {
+        this.memCard = memCard;
+        card4442.init(this.memCard);
     }
 
     public void queryCardInfo() {
+        if (card4442.GetStatus()) {
+            GasUtils.showMessageDialog(mContext, "信息", "没有检测到卡，请插入燃气卡！");
+            return;
+        }
+        card4442.Open();
+        card4442.Reset();
+        String cardData = card4442.Read();
+        if(cardData == null)
+        {
+            GasUtils.showMessageDialog(mContext, "信息", "没有读取到卡信息，请重试！");
+            return;
+        }
+        card4442.Close();
+        cardQueryModel.card.setCardData(GasUtils.hexStringToBytes(cardData));
         currentAction = ACTION_QUERY;
         cardQueryModel.ready();
 
