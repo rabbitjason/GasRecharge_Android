@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         ModelControl.getInstance().init(this);
 
-        bindService();
+        //bindService();
 
     }
 
@@ -117,6 +117,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(conn);
+        //unbindService(conn);
     }
 }

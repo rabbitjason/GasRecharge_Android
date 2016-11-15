@@ -56,7 +56,10 @@ public class NetworkServer {
     }
 
     public void close() {
-        mSocket.close();
+        if (mSocket != null) {
+            mSocket.close();
+            mSocket = null;
+        }
     }
 
     public void connect() {
@@ -99,10 +102,8 @@ public class NetworkServer {
                 //System.out.println("[Client] Received Message " + new String(bb.getAllByteArray()));
                 //ByteBuffer[] byteBuffers = bb.getAllArray();
                 recvBuffer = bb.getAllByteArray();
-                boolean hasRemaining = bb.hasRemaining();
-                if (!hasRemaining) {
-                    mBusinessResponse.OnDataAvailable(recvBuffer);
-                }
+                mBusinessResponse.OnDataAvailable(recvBuffer);
+
             }
         });
 

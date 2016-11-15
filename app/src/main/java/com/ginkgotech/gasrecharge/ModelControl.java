@@ -1,5 +1,6 @@
 package com.ginkgotech.gasrecharge;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -14,7 +15,9 @@ import com.ginkgotech.gasrecharge.model.GasAlipayModel;
 import com.ginkgotech.gasrecharge.model.GasPayModel;
 import com.ginkgotech.gasrecharge.model.GasSaveModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by lipple-server on 16/11/7.
@@ -33,6 +36,8 @@ public class ModelControl implements BusinessResponse {
     public static final int MSG_NET_CONNECT_FAILED = 202;
 
     private int currentAction = 0;
+
+    public List<Activity> activities = new ArrayList<Activity>();
 
     private CardQueryModel cardQueryModel;
     private GasAlipayModel gasAlipayModel;
@@ -69,6 +74,20 @@ public class ModelControl implements BusinessResponse {
 
     }
 
+    public void addActivity(Activity activity) {
+        activities.add(activity);
+    }
+    public void removeActivity(Activity activity) {
+        activities.remove(activity);
+    }
+    public void finishAll() {
+        for (Activity activity : activities) {
+            if (!activity.isFinishing()) {
+                activity.finish();
+            }
+        }
+    }
+
     //定义一个共有的静态方法，返回该类型实例
     public static ModelControl getInstance() {
         // 对象实例化时与否判断（不使用同步代码块，instance不等于null时，直接返回对象，提高运行效率）
@@ -95,10 +114,16 @@ public class ModelControl implements BusinessResponse {
             QRCodeActivity.QRCodeData = gasAlipayModel.QRCodeData;
             Intent intent = new Intent(mContext, QRCodeActivity.class);
             mContext.startActivity(intent);
+
         } else if (ACTION_PAY == currentAction) {
             gasPayModel.onMessage(new String(recv));
+
         } else if (ACTION_SAVE == currentAction) {
+            finishAll();
             gasSaveModel.onMessage(new String(recv));
+            SaveStatusActivity.gasSaveModel = gasSaveModel;
+            Intent intent = new Intent(mContext, SaveStatusActivity.class);
+            mContext.startActivity(intent);
         }
     }
 
@@ -126,20 +151,20 @@ public class ModelControl implements BusinessResponse {
     }
 
     public void queryCardInfo() {
-        if (card4442.GetStatus()) {
-            GasUtils.showMessageDialog(mContext, "信息", "没有检测到卡，请插入燃气卡！");
-            return;
-        }
-        card4442.Open();
-        card4442.Reset();
-        String cardData = card4442.Read();
-        if(cardData == null)
-        {
-            GasUtils.showMessageDialog(mContext, "信息", "没有读取到卡信息，请重试！");
-            return;
-        }
-        card4442.Close();
-        cardQueryModel.card.setCardData(GasUtils.hexStringToBytes(cardData));
+//        if (card4442.GetStatus()) {
+//            GasUtils.showMessageDialog(mContext, "信息", "没有检测到卡，请插入燃气卡！");
+//            return;
+//        }
+//        card4442.Open();
+//        card4442.Reset();
+//        String cardData = card4442.Read();
+//        if(cardData == null)
+//        {
+//            GasUtils.showMessageDialog(mContext, "信息", "没有读取到卡信息，请重试！");
+//            return;
+//        }
+//        card4442.Close();
+//        cardQueryModel.card.setCardData(GasUtils.hexStringToBytes(cardData));
         currentAction = ACTION_QUERY;
         cardQueryModel.ready();
 

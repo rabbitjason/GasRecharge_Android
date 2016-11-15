@@ -50,7 +50,7 @@ public class GasSaveModel {
         //todo read pos config information
         pos = new Pos("200001", "0123456789", "75621477");
         //todo card = read CardData;
-        saveStatus = "0";
+        saveStatus = "1";
         NetworkServer.getInstance().connect();
         return true;
     }

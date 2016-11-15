@@ -13,6 +13,7 @@ import org.w3c.dom.Text;
 
 public class GasInputActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String LADDER_GAS_COUNT = "LADDER_GAS_COUNT";
     private TextView tvCount, tvPrice, tvReturn, tvAction;
     private StringBuffer strCount;
 
@@ -20,6 +21,7 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
     private View btnNine, btnZero, btnDel;
 
     private double gasPrice = 0.0;
+    private long ladderGasCount = 0;
     private int gasCount = 0;
 
     @Override
@@ -28,6 +30,8 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_gas_input);
 
         PriceTable.getInstance().initTable();
+
+        ladderGasCount = this.getIntent().getLongExtra(LADDER_GAS_COUNT, 0);
 
         strCount = new StringBuffer();
 
@@ -86,12 +90,14 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+
+
     }
 
     private void updatePrice(String count) {
         if (!TextUtils.isEmpty(count)) {
             gasCount = Integer.valueOf(count);
-            gasPrice = PriceTable.getInstance().getPrice("0026", 360, gasCount);
+            gasPrice = PriceTable.getInstance().getPrice("0026", ladderGasCount, gasCount);
             tvPrice.setText(String.format("应付金额: %.2f (元)", gasPrice));
         } else {
             tvPrice.setText("");

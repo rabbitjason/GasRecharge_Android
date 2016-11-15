@@ -73,6 +73,7 @@ public class CardInfoActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         if (customer.getGasCount() == 0) {
                             Intent intent = new Intent(CardInfoActivity.this, GasInputActivity.class);
+                            intent.putExtra(GasInputActivity.LADDER_GAS_COUNT, customer.getLadderGasCount());
                             startActivity(intent);
                             finish();
                         }

@@ -27,6 +27,7 @@ public class QRCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qrcode);
 
         initView();
+        ModelControl.getInstance().addActivity(this);
     }
 
     private void initView() {
@@ -44,6 +45,7 @@ public class QRCodeActivity extends AppCompatActivity {
         imgQRCode = (ImageView) findViewById(R.id.imgQRCode);
         imgQRCode.setImageBitmap(GasUtils.byteToBitmap(QRCodeData));
         autoClosed();
+        ModelControl.getInstance().pay();
     }
 
     private void autoClosed() {
@@ -58,5 +60,9 @@ public class QRCodeActivity extends AppCompatActivity {
         }, duration);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ModelControl.getInstance().removeActivity(this);
+    }
 }
