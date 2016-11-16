@@ -89,9 +89,6 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         });
-
-
-
     }
 
     private void updatePrice(String count) {
