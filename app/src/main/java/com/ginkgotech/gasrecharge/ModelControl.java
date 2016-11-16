@@ -49,7 +49,7 @@ public class ModelControl implements BusinessResponse {
     private Card4442 card4442;
     private AidlMemCard memCard;
 
-    private byte [] recvBuf = new byte[4096];
+    private byte [] recvBuf;
     private long recvSize = 0;
     private long realSize = 0;
     private boolean isRemain = false;
@@ -188,6 +188,7 @@ public class ModelControl implements BusinessResponse {
         gasPayModel.payCode = gasAlipayModel.payCode;
         gasPayModel.alipayCode = gasAlipayModel.alipayCode;
         gasPayModel.card.setCardType(gasAlipayModel.cardType);
+        gasPayModel.card.setCardData(cardQueryModel.card.getCardData());
         gasPayModel.ready();
     }
 
@@ -221,31 +222,37 @@ public class ModelControl implements BusinessResponse {
 
     @Override
     public void OnDataAvailable(byte [] recv) {
-        if (!isRemain) {
-            recvBuf = recv;
-            String[] fields = (new String(recv)).split("\\|");
-            String responseCode = fields[1];
-            realSize = Long.valueOf(fields[0]);
-            recvSize = recv.length;
-            if (recvSize > realSize) {
-                Message msg = new Message();
-                msg.what = MSG_RESPONSE_SUCCESSFULLY;
-                msg.obj = recvBuf;
-                msgHandler.sendMessage(msg);
-            } else {
-                isRemain = true;
-            }
-        } else {
-            recvSize += recv.length;
-            for (int i = recvBuf.length-1, j = 0; j < recv.length || i < 4096; ++i, ++j) {
-                recvBuf[i] = recv[j];
-            }
-            Message msg = new Message();
-            msg.what = MSG_RESPONSE_SUCCESSFULLY;
-            msg.obj = recvBuf;
-            msgHandler.sendMessage(msg);
-            isRemain = false;
-        }
+        recvBuf = Arrays.copyOf(recv, recv.length);
+        Message msg = new Message();
+        msg.what = MSG_RESPONSE_SUCCESSFULLY;
+        msg.obj = recvBuf;
+        msgHandler.sendMessage(msg);
+
+//        if (!isRemain) {
+//
+//            String[] fields = (new String(recv)).split("\\|");
+//            String responseCode = fields[1];
+//            realSize = Long.valueOf(fields[0]);
+//            recvSize = recv.length;
+//            if (recvSize > realSize) {
+//                Message msg = new Message();
+//                msg.what = MSG_RESPONSE_SUCCESSFULLY;
+//                msg.obj = recvBuf;
+//                msgHandler.sendMessage(msg);
+//            } else {
+//                isRemain = true;
+//            }
+//        } else {
+//            recvSize += recv.length;
+//            for (int i = recvBuf.length-1, j = 0; j < recv.length || i < 4096; ++i, ++j) {
+//                recvBuf[i] = recv[j];
+//            }
+//            Message msg = new Message();
+//            msg.what = MSG_RESPONSE_SUCCESSFULLY;
+//            msg.obj = recvBuf;
+//            msgHandler.sendMessage(msg);
+//            isRemain = false;
+//        }
     }
 
     @Override

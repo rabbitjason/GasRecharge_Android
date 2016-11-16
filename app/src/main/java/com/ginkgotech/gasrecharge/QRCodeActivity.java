@@ -63,6 +63,7 @@ public class QRCodeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        isSkip = true;
         ModelControl.getInstance().removeActivity(this);
     }
 }
