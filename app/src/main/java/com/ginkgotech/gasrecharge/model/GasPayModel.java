@@ -1,11 +1,13 @@
 package com.ginkgotech.gasrecharge.model;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.ginkgotech.gasrecharge.Constant;
 import com.ginkgotech.gasrecharge.GasUtils;
 import com.ginkgotech.gasrecharge.ModelControl;
 import com.ginkgotech.gasrecharge.NetworkServer;
+import com.ginkgotech.gasrecharge.PayStatusActivity;
 
 /**
  * Created by lipple-server on 16/11/8.
@@ -63,17 +65,17 @@ public class GasPayModel {
         String[] fields = recv.split("\\|");
         int pos = 0;
         responseCode = fields[++pos];
+        responseDesc = fields[++pos];
         if (responseCode.equals("0")) {
-            responseDesc = fields[++pos];
             card.setCardType(fields[++pos]);
             userCode = fields[++pos];
             card.setOldPassword(GasUtils.hexStringToBytes(fields[++pos]));
             card.setNewpassword(GasUtils.hexStringToBytes(fields[++pos]));
             card.setCardData(GasUtils.hexStringToBytes(fields[++pos]));
-            ModelControl.getInstance().save();
-        } else {
-            GasUtils.showMessageDialog(mContext, "信息", responseDesc);
+            //ModelControl.getInstance().save();
         }
-
+        Intent intent = new Intent(mContext, PayStatusActivity.class);
+        intent.putExtra(PayStatusActivity.STATUS_CODE, responseCode);
+        mContext.startActivity(intent);
     }
 }

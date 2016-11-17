@@ -208,6 +208,7 @@ public class ModelControl implements BusinessResponse {
 
     public void showPayStatus() {
         Intent intent = new Intent(mContext, PayStatusActivity.class);
+        intent.putExtra(PayStatusActivity.STATUS_CODE, "2");
         mContext.startActivity(intent);
     }
 

@@ -40,6 +40,7 @@ public class SaveStatusActivity extends AppCompatActivity {
         tvReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ModelControl.getInstance().finishAll();
                 finish();
             }
         });

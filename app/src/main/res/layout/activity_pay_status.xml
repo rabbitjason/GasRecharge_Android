@@ -8,6 +8,7 @@
     tools:context="com.ginkgotech.gasrecharge.PayStatusActivity">
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/headerHeight"
         android:text="支付结果"
@@ -18,12 +19,57 @@
         android:background="#FF8C00"/>
 
     <LinearLayout
+        android:id="@+id/llOk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/ok_ic"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="充值成功"
+            android:textSize="30sp"
+            android:textColor="#00CC00"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/error_ic"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="支付失败"
+            android:textSize="30sp"
+            android:textColor="#CC0000"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTip"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="vertical"
         android:gravity="center"
         android:layout_centerVertical="true"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,46 +101,6 @@
             android:text="请按下方返回键，回到主菜单操作"
             android:textColor="#0099FF"
             android:textSize="16sp"/>
-        <LinearLayout
-            android:id="@+id/llOk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:visibility="gone">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@mipmap/ok_ic"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="充值成功"
-                android:textSize="30sp"
-                android:textColor="#00CC00"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:visibility="gone">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@mipmap/error_ic"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="支付失败"
-                android:textSize="30sp"
-                android:textColor="#CC0000"/>
-        </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
