@@ -157,7 +157,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="应付金额: 0元"
-            android:textSize="20sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="#0099FF"
             android:background="@color/white"/>

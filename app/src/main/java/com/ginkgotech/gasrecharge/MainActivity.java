@@ -19,7 +19,7 @@ import com.centerm.smartpos.util.LogUtil;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
-    private ImageButton btnQuery, btnPay, btnSave;
+    private ImageButton btnQuery, btnPay, btnSave, btnHelp;
     private TextView tvContacts;
 
     public AidlDeviceManager manager = null;
@@ -109,6 +109,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnHelp = (ImageButton) findViewById(R.id.btnHelp);
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OperationGuideActivity.class);
                 startActivity(intent);
             }
         });

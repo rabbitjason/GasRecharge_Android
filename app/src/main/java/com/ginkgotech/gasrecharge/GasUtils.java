@@ -3,10 +3,14 @@ package com.ginkgotech.gasrecharge;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.SoftReference;
@@ -112,5 +116,57 @@ public class GasUtils {
                     }
                 })
                 .show();
+    }
+
+    // width height 实际需要的图片尺寸，为了保证裁剪的图片不变形，最好还是算一下缩放比例，这里就不写了
+    public static Bitmap loadBitmap(Resources res, int resId, int width, int height)
+    {
+        // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+        // 调用上面定义的方法计算inSampleSize值
+        options.inSampleSize = calculateSampleSize(options, width, height);
+        // 使用获取到的inSampleSize值再次解析图片
+        options.inJustDecodeBounds = false;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        return BitmapFactory.decodeResource(res, resId, options);
+
+//        Bitmap bitmap = null;
+//        if (url == null || !new File(url).exists()) return bitmap;
+//        try
+//        {
+//            BitmapFactory.Options opts = new BitmapFactory.Options();
+//            opts.inJustDecodeBounds = true;
+//            BitmapFactory.decodeFile(url, opts);
+//            opts.inSampleSize = calculateSampleSize(opts, width, height);
+//            opts.inJustDecodeBounds = false;
+//            opts.inPreferredConfig = Bitmap.Config.RGB_565;
+//            bitmap = BitmapFactory.decodeStream(new FileInputStream(url), null, opts);
+//            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height);
+//            return bitmap;
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return bitmap;
+    }
+
+    private static int calculateSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
+    {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+        if (height > reqHeight || width > reqWidth)
+        {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+            while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth)
+            {
+                inSampleSize *= 2;
+            }
+        }
+        return inSampleSize;
     }
 }

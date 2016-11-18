@@ -25,6 +25,8 @@ public class GasSaveModel {
     public String userAddress;
     public String gasCount;
 
+    public String responseCode = "unknown";
+    public String responseDesc;
 
     public GasSaveModel(Context context) {
         this.mContext = context;
@@ -61,10 +63,15 @@ public class GasSaveModel {
 
     public void onMessage(String recv) {
         String[] fields = recv.split("\\|");
-        int pos = 5;
-        userName = fields[pos];
-        userAddress = fields[++pos];
-        gasCount = fields[++pos];
+        responseCode = fields[1];
+        responseDesc = fields[2];
+        if (responseCode.equals("0")) {
+            int pos = 5;
+            userName = fields[pos];
+            userAddress = fields[++pos];
+            gasCount = fields[++pos];
+        }
+
     }
 
 }

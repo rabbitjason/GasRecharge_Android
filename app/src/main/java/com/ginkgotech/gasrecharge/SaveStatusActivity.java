@@ -1,5 +1,6 @@
 package com.ginkgotech.gasrecharge;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +45,13 @@ public class SaveStatusActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        if (!gasSaveModel.responseCode.equals("0")) {
+            tvResult.setText("对不起，圈存失败");
+            tvResult.setTextColor(Color.RED);
+            tvTips.setText("圈存失败，请返回重新选择[用户圈存]\n如有问题，联系客服！");
+            tvReturn.setText("返回");
+        }
 
     }
 }

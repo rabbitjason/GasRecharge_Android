@@ -10,7 +10,7 @@ public class PayStatusActivity extends AppCompatActivity {
 
     public static final String STATUS_CODE = "STATUS_CODE";
 
-    private TextView tvReturn;
+    private TextView tvReturn, tvTip;
 
     private View llOk, llError, llTip;
 
@@ -40,12 +40,16 @@ public class PayStatusActivity extends AppCompatActivity {
 
         llTip = findViewById(R.id.llTip);
 
+        tvTip = (TextView) findViewById(R.id.tvTip);
+
         statusCode = getIntent().getStringExtra(STATUS_CODE);
         if (statusCode.equals("0")) {
             llOk.setVisibility(View.VISIBLE);
             tvReturn.setText("圈存");
+            tvTip.setText("按圈存键进行圈存！");
         } else if (statusCode.equals("1")) {
             llError.setVisibility(View.VISIBLE);
+            tvTip.setText("按返回键重新支付！\n如有问题，请联系客服务");
         } else {
             llTip.setVisibility(View.VISIBLE);
         }
