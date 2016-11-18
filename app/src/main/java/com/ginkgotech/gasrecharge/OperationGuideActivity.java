@@ -14,7 +14,7 @@ public class OperationGuideActivity extends AppCompatActivity {
 
         imgOption = (ImageView) findViewById(R.id.imgOption);
 
-        imgOption.setImageBitmap(GasUtils.loadBitmap(getResources(), R.mipmap.operation, 560, 5600));
-        imgOption.setScaleType(ImageView.ScaleType.FIT_XY);
+        imgOption.setImageBitmap(GasUtils.loadBitmap(getResources(), R.mipmap.operation, 560, 3200));
+        imgOption.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
     }
 }
