@@ -22,7 +22,7 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
 
     private double gasPrice = 0.0;
     private long ladderGasCount = 0;
-    private int gasCount = 0;
+    private long gasCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +84,8 @@ public class GasInputActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 if (gasCount > 0) {
-                    ModelControl.getInstance().aliPay(gasCount, gasPrice);
                     finish();
+                    ModelControl.getInstance().aliPay(gasCount, gasPrice);
                 }
             }
         });

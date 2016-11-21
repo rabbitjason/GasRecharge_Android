@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+
 public class QRCodeActivity extends AppCompatActivity {
 
     public static byte []QRCodeData; //二维码图片

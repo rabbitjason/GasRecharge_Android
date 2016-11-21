@@ -19,7 +19,7 @@ public class GasPayModel {
 
     public Pos pos;
     public String userCode;
-    public int gasCount;
+    public long gasCount;
     public double gasPrice;
     public String payCode;
     public String alipayCode;

@@ -15,6 +15,8 @@ import com.ginkgotech.gasrecharge.model.GasAlipayModel;
 import com.ginkgotech.gasrecharge.model.GasPayModel;
 import com.ginkgotech.gasrecharge.model.GasSaveModel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +36,8 @@ public class ModelControl implements BusinessResponse {
     public static final int MSG_RESPONSE_FAILED = 200;
     public static final int MSG_RESPONSE_SUCCESSFULLY = 201;
     public static final int MSG_NET_CONNECT_FAILED = 202;
+    public static final int MSG_GETTING_NETDATA = 203;
+    public static final int MSG_ENDDED_NETDATA = 204;
 
     private int currentAction = 0;
 
@@ -54,6 +58,8 @@ public class ModelControl implements BusinessResponse {
     private long realSize = 0;
     private boolean isRemain = false;
 
+    private ByteArrayOutputStream baos;
+
     private Handler msgHandler = new Handler() {
         public void handleMessage(Message msg) {
             if (MSG_RESPONSE_FAILED == msg.what) {
@@ -64,6 +70,24 @@ public class ModelControl implements BusinessResponse {
                 onHandleMessage(recv);
             } else if (MSG_NET_CONNECT_FAILED == msg.what) {
                 GasUtils.showMessageDialog(mContext, "信息","网络连接失败！");
+            } else if (MSG_GETTING_NETDATA == msg.what) {
+                baos = new ByteArrayOutputStream();
+                recvBuf = (byte[])msg.obj;
+                try {
+                    baos.write(recvBuf);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } else if (MSG_ENDDED_NETDATA == msg.what) {
+                recvBuf = (byte[])msg.obj;
+                try {
+                    baos.write(recvBuf);
+                    onHandleMessage(baos.toByteArray());
+                    baos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     };
@@ -111,9 +135,6 @@ public class ModelControl implements BusinessResponse {
             mContext.startActivity(intent);
         } else if (ACTION_ALIPAY == currentAction) {
             gasAlipayModel.onMessage(recv);
-            QRCodeActivity.QRCodeData = gasAlipayModel.QRCodeData;
-            Intent intent = new Intent(mContext, QRCodeActivity.class);
-            mContext.startActivity(intent);
 
         } else if (ACTION_PAY == currentAction) {
             gasPayModel.onMessage(new String(recv));
@@ -170,7 +191,7 @@ public class ModelControl implements BusinessResponse {
 
     }
 
-    public void aliPay(int gasCount, double gasPrice) {
+    public void aliPay(long gasCount, double gasPrice) {
         currentAction = ACTION_ALIPAY;
         gasAlipayModel.userCode = cardQueryModel.customer.getUserCode();
         gasAlipayModel.pos = cardQueryModel.pos;
@@ -223,37 +244,30 @@ public class ModelControl implements BusinessResponse {
 
     @Override
     public void OnDataAvailable(byte [] recv) {
-        recvBuf = Arrays.copyOf(recv, recv.length);
-        Message msg = new Message();
-        msg.what = MSG_RESPONSE_SUCCESSFULLY;
-        msg.obj = recvBuf;
-        msgHandler.sendMessage(msg);
 
-//        if (!isRemain) {
-//
-//            String[] fields = (new String(recv)).split("\\|");
-//            String responseCode = fields[1];
-//            realSize = Long.valueOf(fields[0]);
-//            recvSize = recv.length;
-//            if (recvSize > realSize) {
-//                Message msg = new Message();
-//                msg.what = MSG_RESPONSE_SUCCESSFULLY;
-//                msg.obj = recvBuf;
-//                msgHandler.sendMessage(msg);
-//            } else {
-//                isRemain = true;
-//            }
-//        } else {
-//            recvSize += recv.length;
-//            for (int i = recvBuf.length-1, j = 0; j < recv.length || i < 4096; ++i, ++j) {
-//                recvBuf[i] = recv[j];
-//            }
-//            Message msg = new Message();
-//            msg.what = MSG_RESPONSE_SUCCESSFULLY;
-//            msg.obj = recvBuf;
-//            msgHandler.sendMessage(msg);
-//            isRemain = false;
-//        }
+        if (!isRemain) {
+            String[] fields = (new String(recv)).split("\\|");
+            realSize = Long.valueOf(fields[0]);
+            recvSize = recv.length;
+            if (recvSize > realSize) {
+                Message msg = new Message();
+                msg.what = MSG_RESPONSE_SUCCESSFULLY;
+                msg.obj = recv;
+                msgHandler.sendMessage(msg);
+            } else {
+                Message msg = new Message();
+                msg.what = MSG_GETTING_NETDATA;
+                msg.obj = recv;
+                msgHandler.sendMessage(msg);
+                isRemain = true;
+            }
+        } else {
+            Message msg = new Message();
+            msg.what = MSG_ENDDED_NETDATA;
+            msg.obj = recv;
+            msgHandler.sendMessage(msg);
+            isRemain = false;
+        }
     }
 
     @Override

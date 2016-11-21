@@ -24,26 +24,32 @@ import java.util.Date;
 public class GasUtils {
 
     public static Bitmap byteToBitmap(byte[] imgByte) {
-        InputStream input = null;
+        //InputStream input = null;
         Bitmap bitmap = null;
+        //BitmapFactory.Options options = new BitmapFactory.Options();
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 1;
-        input = new ByteArrayInputStream(imgByte);
-        SoftReference softRef = new SoftReference(BitmapFactory.decodeStream(
-                input, null, options));
-        bitmap = (Bitmap) softRef.get();
-        if (imgByte != null) {
-            imgByte = null;
-        }
+        options.outWidth = 333;
+        options.outHeight = 333;
+        options.outMimeType = "PNG";
+        bitmap = BitmapFactory.decodeByteArray(imgByte, 0 , imgByte.length, options);
 
-        try {
-            if (input != null) {
-                input.close();
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        options.inSampleSize = 2;
+//        input = new ByteArrayInputStream(imgByte);
+//        SoftReference softRef = new SoftReference(BitmapFactory.decodeStream(
+//                input, null, options));
+//        bitmap = (Bitmap) softRef.get();
+////        if (imgByte != null) {
+////            imgByte = null;
+////        }
+//
+//        try {
+//            if (input != null) {
+//                input.close();
+//            }
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
         return bitmap;
     }
 

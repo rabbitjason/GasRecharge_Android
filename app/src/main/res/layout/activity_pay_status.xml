@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="充值成功"
-            android:textSize="30sp"
+            android:textSize="35sp"
             android:textColor="#00CC00"/>
     </LinearLayout>
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="支付失败"
-            android:textSize="30sp"
+            android:textSize="35sp"
             android:textColor="#CC0000"/>
     </LinearLayout>
 
@@ -84,7 +84,7 @@
             android:gravity="center"
             android:text="支付未完成，请选择【扫码购气】重新支付"
             android:textColor="#0099FF"
-            android:textSize="16sp"/>
+            android:textSize="18sp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:gravity="center"
             android:text="支付已完成，请选择【用户圈存】进行圈存"
             android:textColor="#0099FF"
-            android:textSize="16sp"/>
+            android:textSize="18sp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
             android:gravity="center"
             android:text="请按下方返回键，回到主菜单操作"
             android:textColor="#0099FF"
-            android:textSize="16sp"/>
+            android:textSize="18sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -118,7 +118,7 @@
             android:gravity="center"
             android:text="如有问题，联系客服：027-85252503"
             android:textColor="#0099FF"
-            android:textSize="20sp"/>
+            android:textSize="25sp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="30dp"/>

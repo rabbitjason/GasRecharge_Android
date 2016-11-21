@@ -4,16 +4,29 @@
     android:id="@+id/activity_operation_guide"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.ginkgotech.gasrecharge.OperationGuideActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <ImageView
             android:id="@+id/imgOption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/tvReturn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/headerHeight"
+        android:background="#FF8C00"
+        android:text="返回"
+        android:textColor="@color/white"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
 
 </LinearLayout>
