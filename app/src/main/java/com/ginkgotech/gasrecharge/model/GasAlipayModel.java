@@ -38,14 +38,13 @@ public class GasAlipayModel {
     private String packageData() {
         String sendData = "";
         sendData = Constant.TRANSACTION_CODE_ALIPAY + "|" + cardType + "|" + userCode + "|";
-        sendData += String.valueOf(gasCount) + "|" + String.valueOf(gasPrice) + "|";
+        sendData += String.valueOf(gasCount) + "|" + String.format("%.2f", gasPrice) + "|";
         sendData += GasUtils.getCurrentDate() + "|" + GasUtils.getCurrentTime() + "|"
                 + pos.getAgentCode() + "|" + pos.getTerminateCode() + "|" + pos.getMachineCode()
                 + "||";
 
         int len = sendData.length() + 5;
         sendData = String.format("%04d", len) + "|" + sendData;
-
         return sendData;
     }
 

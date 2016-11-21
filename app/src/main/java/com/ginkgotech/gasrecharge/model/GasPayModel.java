@@ -39,7 +39,7 @@ public class GasPayModel {
         String sendData = "";
 
         sendData = Constant.TRANSACTION_CODE_PAY + "|" + card.getCardType() + "|" + userCode + "|"
-                + String.valueOf(gasCount) + "|" + String.valueOf(gasPrice) + "|"
+                + String.valueOf(gasCount) + "|" + String.format("%.2f", gasPrice)  + "|"
                 + "0" + "|" + GasUtils.bytesToHexString(card.getCardData()) + "|"
                 +  GasUtils.getCurrentDate() + "|" + GasUtils.getCurrentTime() + "|"
                 + pos.getAgentCode() + "|" + pos.getTerminateCode() + "|" + pos.getMachineCode()
